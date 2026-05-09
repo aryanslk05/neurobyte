@@ -10,8 +10,9 @@ class ApiClient {
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
-  // Replace with your local backend URL / deployed URL
-  static const String baseUrl = 'https://studybyte-backend-8i8v.onrender.com';
+  // Codespaces backend URL - Port 5000
+  // Example: https://your-codespace-name-5000.app.github.dev
+  static const String baseUrl = 'https://effective-space-disco-v6qr4jv6q9pxhv54-5000.app.github.dev';
 
   Future<String?> _getToken() async {
     return _storage.read(key: 'jwt');
@@ -31,7 +32,11 @@ class ApiClient {
     bool authorized = false,
   }) async {
     final uri = Uri.parse('$baseUrl$path');
-    final headers = <String, String>{'Content-Type': 'application/json'};
+
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
     if (authorized) {
       final token = await _getToken();
       if (token != null) {
@@ -39,7 +44,11 @@ class ApiClient {
       }
     }
 
-    return http.post(uri, headers: headers, body: jsonEncode(body ?? {}));
+    return http.post(
+      uri,
+      headers: headers,
+      body: jsonEncode(body ?? {}),
+    );
   }
 
   Future<http.Response> get(
@@ -47,7 +56,9 @@ class ApiClient {
     bool authorized = false,
   }) async {
     final uri = Uri.parse('$baseUrl$path');
+
     final headers = <String, String>{};
+
     if (authorized) {
       final token = await _getToken();
       if (token != null) {
@@ -55,7 +66,10 @@ class ApiClient {
       }
     }
 
-    return http.get(uri, headers: headers);
+    return http.get(
+      uri,
+      headers: headers,
+    );
   }
 
   Future<http.Response> put(
@@ -64,7 +78,11 @@ class ApiClient {
     bool authorized = false,
   }) async {
     final uri = Uri.parse('$baseUrl$path');
-    final headers = <String, String>{'Content-Type': 'application/json'};
+
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
     if (authorized) {
       final token = await _getToken();
       if (token != null) {
@@ -72,7 +90,10 @@ class ApiClient {
       }
     }
 
-    return http.put(uri, headers: headers, body: jsonEncode(body ?? {}));
+    return http.put(
+      uri,
+      headers: headers,
+      body: jsonEncode(body ?? {}),
+    );
   }
 }
-
